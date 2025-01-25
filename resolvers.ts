@@ -24,7 +24,7 @@ type Context = {
 export const resolvers = {
 
     Mutation: {
-        addContact: async(_:unknown, args:addArgs, ctx: Context): Promise<AgendaModel> => {
+        addContact: async(_:unknown, args:addArgs, ctx: Context): Promise<AgendaModel | null> => {
             const API_KEY = Deno.env.get("API_KEY")
             if(!API_KEY) throw new GraphQLError("No hay API_KEY")
             
