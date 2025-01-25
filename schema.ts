@@ -5,7 +5,6 @@ export const schema = `#graphql
         nombre: String!
         telefono: String!
         country: String
-        timezones: String
         datetime: String
     }
 
@@ -17,6 +16,6 @@ export const schema = `#graphql
     type Mutation {
         addContact(nombre:String!, telefono:String!): Contacto!
         deleteContact(id:ID!): Boolean!
-        updateContact(id:ID!, nombre:String!, telefono:String!): Contacto!
+        updateContact(id:ID!, nombre:String, telefono:String): Contacto!
     }
 `

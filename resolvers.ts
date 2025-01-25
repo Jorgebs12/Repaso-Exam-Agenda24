@@ -30,8 +30,8 @@ export const resolvers = {
             
                 const {nombre, telefono} = args;
 
-                //const existe = await ctx.AgendaCollection.findOne(telefono)
-                //if(existe) throw new GraphQLError("El tlf ya existe")
+                const phoneExist = await ctx.AgendaCollection.countDocuments({ telefono });
+                if (phoneExist >= 1) throw new GraphQLError("Phone exists");
 
                 const url = `https://api.api-ninjas.com/v1/validatephone?number=${telefono}`
                 const data = await fetch(url, {headers: { 'X-Api-Key': API_KEY},})
@@ -115,20 +115,20 @@ export const resolvers = {
             const API_KEY = Deno.env.get("API_KEY")
             if(!API_KEY) throw new GraphQLError("No hay API_KEY")
             
-                const country = parent.timezones;
+            const country = parent.timezones;
 
-                const url = `https://api.api-ninjas.com/v1/worldtime?timezone=${country}`
+            const url = `https://api.api-ninjas.com/v1/worldtime?timezone=${country}`
 
-                console.log(url )
-                const data = await fetch(url, {headers: { 'X-Api-Key': API_KEY},})
+            console.log(url )
+            const data = await fetch(url, {headers: { 'X-Api-Key': API_KEY},})
 
-                if (data.status !== 200) throw new GraphQLError("API Ninja Error");
+            if (data.status !== 200) throw new GraphQLError("API Ninja Error");
 
-                const response: ApiWorldTime = await data.json()
+            const response: ApiWorldTime = await data.json()
 
-                const datetime = response.datetime
+            const datetime = response.datetime
 
-                return datetime
+            return datetime
         }
     }
 }
